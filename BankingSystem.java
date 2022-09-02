@@ -1,4 +1,5 @@
 package com.company;
+
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -14,24 +15,20 @@ public class BankingSystem {
 
     public void displayUsers() {
         int i = 1;
-        for (User str : users) {
+        for (User item : users) {
             System.out.print("User " + i + ":");
-            str.printUserData(str);
+            item.printUserData();
             i++;
         }
     }
 
     public void displayAccounts() {
         int i = 1;
-        for (Account str : accounts) {
+        for (Account item : accounts) {
             System.out.print("Account " + i + ":");
-            str.printAccountData();
+            item.printAccountData();
             i++;
         }
-    }
-
-    public void addUser(User user) {
-        users.add(user);
     }
 
     public void removeUser(User user) {
@@ -45,60 +42,56 @@ public class BankingSystem {
     public void removeAccount(Account account) {
         accounts.remove(account);
     }
+
     public Account findAccount(String serial) {
-        for (Account str : accounts) {
-            if (str.getSerial().equals(UUID.fromString(serial))) {
-                return str;
+        for (Account item : accounts) {
+            if (item.getSerial().equals(UUID.fromString(serial))) {
+                return item;
             }
-        }
-       return null;
-    }
-    public User findUser(String id,String password) {
-        for (User str : users) {
-            if (str.getPassword().equals(password))
-            {
-                if (str.getId().equals(id))
-                {
-                    return str;
-                }
-            }
-        }
-       return null;
-    }
-    public User findUser(String id) {
-        for (User str : users) {
-                if (str.getId().equals(id))
-                {
-                    return str;
-                }
         }
         return null;
     }
-    public void register(User user)
-    {
-        Iterator<User> it = users.iterator();
-        boolean existUser = false;
-        while(it.hasNext()) {
-            User i = it.next();
-            if(i.getId().equals(user.getId())) {
-                System.out.println("user already exists.");
-                existUser=true;
+
+    public User findUser(String id, String password) {
+        for (User item : users) {
+            if (item.getPassword().equals(password)) {
+                if (item.getId().equals(id)) {
+                    return item;
+                }
             }
         }
-        if (existUser==false)
-        {
+        return null;
+    }
+
+    public User findUser(String id) {
+        for (User item : users) {
+            if (item.getId().equals(id)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public void register(User user) {
+        Iterator<User> it = users.iterator();
+        boolean existUser = false;
+        while (it.hasNext()) {
+            User i = it.next();
+            if (i.getId().equals(user.getId())) {
+                System.out.println("user already exists.");
+                existUser = true;
+            }
+        }
+        if (!existUser) {
             users.add(user);
             System.out.println("user created.");
         }
     }
-    public void login(String id, String password)
-    {
-        Iterator<User> it = users.iterator();
-        while(it.hasNext()) {
-            User i = it.next();
-            if(i.getId().equals(id)) {
-                if(i.getPassword().equals(password))
-                {
+
+    public void login(String id, String password) {
+        for (User i : users) {
+            if (i.getId().equals(id)) {
+                if (i.getPassword().equals(password)) {
                     System.out.println("Logged in.");
 
                 }
